@@ -39,8 +39,263 @@
 <h2>HW 1 Exam</h2>
 <p>每六人為一組進行協同程式練習</p>
 <p>透過 Jupyterlab 協同網頁, 輪流指定各組編寫 Topic 1 相關的程式練習, 以及網頁內容 (localhost 與 Codespaces 環境)編輯.</p>
-<h3>w13</h3>
-<h3>w10</h3>
+<h3>w13_hw</h3>
+<p>1.兩個紅色框框</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from browser import html
+from browser import document as doc
+
+# 利用 html 建立 canvas 超文件物件
+canvas = html.CANVAS(width = 400,height = 400)
+brython_div = doc["brython_div1"]
+brython_div &lt;= canvas
+
+# 每一格的 pixel 數
+gs = 200
+
+# gs*tc = canvas width and height
+
+ctx = canvas.getContext("2d")
+
+width=1
+height=1
+
+for i in range(width): 
+    for j in range(height):
+     #dRect(i*gs, j*gs, gs, gs, 1, "lightgrey")
+     ctx.lineWidth=1
+     ctx.strokeStyle='red'
+     ctx.beginPath();
+     ctx.rect(i*gs,j*gs,gs,gs)
+     ctx.stroke();
+     
+for i in range(width): 
+    for j in range(height):
+     #dRect(i*gs, j*gs, gs, gs, 1, "lightgrey")
+     ctx.lineWidth=1
+     ctx.strokeStyle='red'
+     ctx.beginPath();
+     ctx.rect(i*gs+50,j*gs+50,gs,gs)
+     ctx.stroke();</pre>
+<p>2.</p>
+<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false"> from browser import html, document as doc, window
+ 
+# Create canvas element
+canvas = html.CANVAS(width=500, height=500)  # Increase canvas size to ensure circles are fully visible
+brython_div = doc["brython_div1"]
+brython_div &lt;= canvas
+ 
+# Get the drawing context of the canvas
+ctx = canvas.getContext("2d")
+ 
+# Draw the first empty square at (0, 0)
+width = 10
+height = 10
+gs = 20  # Grid size (for spacing)
+ 
+ctx.lineWidth = 2
+ctx.strokeStyle = 'red'  # Color for the first square
+ctx.beginPath()
+ctx.rect(50, 50, width * gs, height * gs)  # Draw a hollow square with offset (50, 50)
+ctx.stroke()
+ 
+# Draw the second empty square at (100, 100)
+offset_x = 150  # Change the x-coordinate to give more space
+offset_y = 150  # Change the y-coordinate to give more space
+width2 = 10
+height2 = 10
+ 
+ctx.lineWidth = 2
+ctx.strokeStyle = 'red'  # Color for the second square
+ctx.beginPath()
+ctx.rect(offset_x, offset_y, width2 * gs, height2 * gs)  # Draw another hollow square
+ctx.stroke()
+ 
+# Function to draw a circle around a square
+def draw_outer_circle(x, y, width, height):
+    # Calculate the radius of the outer circle (half of the diagonal of the square)
+    radius = window.Math.sqrt(width ** 2 + height ** 2) / 2
+    # Calculate the center of the square
+    center_x = x + width * gs / 2
+    center_y = y + height * gs / 2
+    # Draw the outer circle
+    ctx.beginPath()
+    ctx.arc(center_x, center_y, radius * gs, 0, 2 * window.Math.PI)
+    ctx.strokeStyle = 'black'  # Color for the outer circle
+    ctx.lineWidth = 2
+    ctx.stroke()
+ 
+# Draw outer circles around both squares
+draw_outer_circle(50, 50, width, height)  # For the first square
+draw_outer_circle(offset_x, offset_y, width2, height2)  # For the second square
+ 
+# Create the context menu
+context_menu = html.DIV(style={"position": "absolute", "display": "none", "background-color": "#fff", "border": "1px solid #ccc", "padding": "5px"})
+context_menu &lt;= html.BUTTON("Option 1: Clear Canvas")
+context_menu &lt;= html.BUTTON("Option 2: Draw Circle")
+brython_div &lt;= context_menu
+ 
+# Function to show context menu
+def show_context_menu(event):
+    event.preventDefault()  # Prevent the default right-click menu
+    context_menu.style.display = "block"  # Show custom context menu
+    context_menu.style.left = f"{event.pageX}px"  # Set the position of the menu
+    context_menu.style.top = f"{event.pageY}px"
+ 
+# Hide the context menu when clicking elsewhere
+def hide_context_menu(event):
+    context_menu.style.display = "none"
+ 
+# Attach right-click (contextmenu) event to the canvas
+canvas.bind("contextmenu", show_context_menu)
+ 
+# Attach click event to document to hide the menu when clicking elsewhere
+document.bind("click", hide_context_menu)
+ 
+# Function for the menu options
+def clear_canvas(event):
+    ctx.clearRect(0, 0, canvas.width, canvas.height)  # Clear the canvas
+    context_menu.style.display = "none"  # Hide the context menu after action
+ 
+def draw_circle(event):
+    ctx.beginPath()
+    ctx.arc(200, 200, 50, 0, 2 * window.Math.PI)  # Draw a circle at the center
+    ctx.strokeStyle = 'green'
+    ctx.stroke()
+    context_menu.style.display = "none"  # Hide the context menu after action
+ 
+# Attach actions to context menu buttons
+context_menu.children[0].bind("click", clear_canvas)  # First button: Clear canvas
+context_menu.children[1].bind("click", draw_circle)  # Second button: Draw a circle</pre>
+<p>3<a href="https://mde.tw/cp2024/content/Brython.html?src=https://gist.githubusercontent.com/41323229/e4203e61171011eb968cc4b54dbeaef4/raw/d2190e5cd4cad4fec6e796abc5f6bce13f45a4f7/w13_hw">.兩個圓加兩個方形加斜線加變色</a></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from browser import html
+from browser import document as doc
+import math
+ 
+canvas = html.CANVAS(width=500, height=500)
+brython_div = doc["brython_div1"]
+brython_div &lt;= canvas
+ 
+ctx = canvas.getContext("2d")
+ctx.lineWidth = 4
+
+#混色的
+ctx.globalCompositeOperation = "lighter"
+
+
+#黑邊圓*2(每個畫四個邊邊)
+ctx.strokeStyle = 'black'
+#第一個圓
+ctx.beginPath()
+ctx.arc(160, 160, 141, 0.25 * math.pi,0.75 * math.pi)
+ctx.fillStyle = "LightCyan"
+ctx.fill()
+ctx.stroke()
+
+ctx.beginPath()
+ctx.arc(160, 160, 141, 0.75 * math.pi,1.25 * math.pi)
+ctx.fillStyle = "Fuchsia"
+ctx.fill()
+ctx.stroke()
+
+ctx.beginPath()
+ctx.arc(160, 160, 141, 1.25 * math.pi,1.75 * math.pi)
+ctx.fillStyle = "Lightyellow"
+ctx.fill()
+ctx.stroke()
+
+ctx.beginPath()
+ctx.arc(160, 160, 141, 1.75 * math.pi,0.25 * math.pi)
+ctx.fillStyle = "Gray"
+ctx.fill()
+ctx.stroke()
+
+#第二個圓
+ctx.beginPath()
+ctx.arc(260, 260, 141, 1.25 * math.pi,1.75 * math.pi)
+ctx.fillStyle = "Navy"
+ctx.fill()
+ctx.stroke()
+
+ctx.beginPath()
+ctx.arc(260, 260, 141, 1.75 * math.pi,0.25 * math.pi)
+ctx.fillStyle = "LawnGreen"
+ctx.fill()
+ctx.stroke()
+
+ctx.beginPath()
+ctx.arc(260, 260, 141, 0.25 * math.pi,0.75 * math.pi)
+ctx.fillStyle = "LightPink"
+ctx.fill()
+ctx.stroke()
+
+ctx.beginPath()
+ctx.arc(260, 260, 141, 0.75 * math.pi,1.25 * math.pi)
+ctx.fillStyle = "LavenderBlush"
+ctx.fill()
+ctx.stroke()
+
+
+#紅方形*2(4個三角形)
+ctx.strokeStyle = 'red'
+ctx.beginPath()
+ctx.moveTo(60,60)
+ctx.lineTo(60,260)
+ctx.lineTo(260,260)
+ctx.fillStyle = "Gold"
+ctx.fill()
+ctx.stroke()
+
+ctx.beginPath()
+ctx.moveTo(60,60)
+ctx.lineTo(260,60)
+ctx.lineTo(260,260)
+ctx.fillStyle = "LavenderBlush"
+ctx.fill()
+ctx.stroke()
+
+ctx.beginPath()
+ctx.moveTo(160,160)
+ctx.lineTo(360,160)
+ctx.lineTo(360,360)
+ctx.fillStyle = "Cyan"
+ctx.fill()
+ctx.stroke()
+
+ctx.beginPath()
+ctx.moveTo(160,160)
+ctx.lineTo(160,360)
+ctx.lineTo(360,360)
+ctx.fillStyle = "MediumSlateBlue"
+ctx.fill()
+ctx.stroke()
+
+ 
+#重疊的小方型
+ctx.beginPath()
+ctx.moveTo(160,160)
+ctx.lineTo(160,260)
+ctx.lineTo(260,260)
+ctx.fillStyle = "MediumSeaGreen"
+ctx.fill()
+ctx.stroke()
+
+ctx.beginPath()
+ctx.moveTo(160,160)
+ctx.lineTo(260,160)
+ctx.lineTo(260,260)
+ctx.fillStyle = "Maroon"
+ctx.fill()
+ctx.stroke()
+
+
+#籃斜線
+ctx.strokeStyle = 'darkblue'
+ctx.beginPath() 
+ctx.moveTo(60, 60)
+ctx.lineTo(360, 360)
+ctx.stroke()</pre>
+<p><br/><br/></p>
+<p></p><h3>w10</h3>
 <p>11/13</p>
 <p></p>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/6QgNSragcAw?si=gjV0GMbUaqNmnprw" title="YouTube video player" width="560"></iframe></p>
@@ -56,9 +311,8 @@
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/FKH4z9b_YHs" width="560"></iframe></p>
 <h3>prython建立</h3>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen" frameborder="0" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/ZCi2Ssp7BOg?si=GsEwPZ8s1soAszr7" title="YouTube video player" width="560"></iframe></p>
-<h3>w11</h3>
-<p><iframe allowfullscreen="allowfullscreen" height="314" src='//www.youtube.com/embed/TqiySYayBcQ?si=d2eVIyTvhG_oSi9r" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen&gt;&lt;/iframe&gt;' width="560"></iframe></p>
-<h1>HW 2</h1>
+<h3>w11_hw</h3>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src='//www.youtube.com/embed/TqiySYayBcQ?si=d2eVIyTvhG_oSi9r" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen&gt;&lt;/iframe&gt;' width="560"></iframe></p><h1>HW 2</h1>
 <h4>主題: Python 的數列、判斷式與重複迴圈 (20%)<span style="background-color: #ffff99;"><br/></span></h4>
 <p style="padding-left: 30px;">Python 課程教材: <a href="https://www.learnpythonwithjupyter.com/">https://www.learnpythonwithjupyter.com/</a> - PART 2 and Part 3</p>
 <hr/>
