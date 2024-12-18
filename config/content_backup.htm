@@ -48,9 +48,29 @@ upto = 100
 # 利用 for 重複迴圈與變數加法進行累加
 for i in range(init, upto+1):
     sum = sum + i
-print("從" + str(init) + "累加到" + str(upto) + "=" + str(sum))
-addto</pre>
-<pre><br/><br/></pre>
+print("從" + str(init) + "累加到" + str(upto) + "=" + str(sum))</pre>
+<pre><span><a href="/get_page/Brython?src=https://gist.githubusercontent.com/41323229/1241d689393bded82299af8f7fa204c3/raw/ed5c04580404596f6d59a5e28a5e925d15c2922d/w15-2.py">addto</a><br/></span></pre>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">def addto(start, end):
+    sum = 0
+    for i in range(start, end + 1):
+        sum += i
+    return sum
+ 
+# 使用函式進行計算
+result = addto(1, 100)
+print("從1累加到100的總和是:", result)</pre>
+<pre><span><a href="/get_page/Brython?src=https://gist.githubusercontent.com/41323229/c9ac90f6bfa608bc4618560071701217/raw/cf6765520f1002a1159ba5b4ed145c908ed11ca4/w15-3.py">add_only_even<br/></a></span></pre>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">def add_only_even(start, end):
+    sum = 0
+    for i in range(start, end + 1):
+        if i % 2 == 0:  # Check if the number is even
+            sum += i
+    return sum
+ 
+# 使用函式進行計算
+result = add_only_even(1, 100)
+print("從1累加到100的偶數總和是:", result)</pre>
+<pre><span>add_avoid_8</span><br/><br/></pre>
 <p></p><h3>w12_hw</h3><h3>w13_hw</h3>
 <p>1.兩個紅色框框</p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from browser import html
@@ -332,7 +352,6 @@ ctx.stroke()</pre>
 <p>PART 2: Introduction to lists and if/else statements</p>
 <p>PART 3: Introduction to the for loop</p>
 <p>完成上述流程整理後, 請將 HW2 自評分數輸入 cp2024 自評表單中.</p>
-<h3>w11</h3>
 <h2>HW 2 Exam</h2>
 <p>每六人為一組進行協同程式練習</p>
 <p>透過 Jupyterlab 協同網頁, 輪流指定各組編寫 HW 2 相關的程式練習, 以及網頁內容 (localhost 與 Codespaces 環境)編輯.</p>

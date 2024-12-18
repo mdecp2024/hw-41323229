@@ -150,9 +150,40 @@ upto = 100
 # 利用 for 重複迴圈與變數加法進行累加
 for i in range(init, upto+1):
     sum = sum + i
-print("從" + str(init) + "累加到" + str(upto) + "=" + str(sum))
-addto</pre>
-<pre><br/><br/></pre>
+print("從" + str(init) + "累加到" + str(upto) + "=" + str(sum))</pre>
+<pre><span><a href="/get_page/Brython?src=https://gist.githubusercontent.com/41323229/1241d689393bded82299af8f7fa204c3/raw/ed5c04580404596f6d59a5e28a5e925d15c2922d/w15-2.py">addto</a><br/></span></pre>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">def addto(start, end):
+    sum = 0
+    for i in range(start, end + 1):
+        sum += i
+    return sum
+ 
+# 使用函式進行計算
+result = addto(1, 100)
+print("從1累加到100的總和是:", result)</pre>
+<pre><span><a href="/get_page/Brython?src=https://gist.githubusercontent.com/41323229/c9ac90f6bfa608bc4618560071701217/raw/cf6765520f1002a1159ba5b4ed145c908ed11ca4/w15-3.py">add_only_even<br/></a></span></pre>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">def add_only_even(start, end):
+    sum = 0
+    for i in range(start, end + 1):
+        if i % 2 == 0:  # Check if the number is even
+            sum += i
+    return sum
+ 
+# 使用函式進行計算
+result = add_only_even(1, 100)
+print("從1累加到100的偶數總和是:", result)</pre>
+<pre><a href="/get_page/Brython?src=https://gist.githubusercontent.com/41323229/cda3d2a5a7434a50537feb49a9b080b4/raw/13e0e67f098cb17ce5b57947e550679e167825d7/w15-4.py">add_avoid_8</a></pre>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">def add_avoid_8(start, end):
+    total = 0
+    for i in range(start, end + 1):
+        if '8' not in str(i):  # 將數字轉成字串檢查是否包含 '8'
+            total += i
+    return total
+ 
+# 測試範例
+result = add_avoid_8(1, 100)
+print("從 1 累加到 100，避開數字包含 '8' 的總和是:", result)</pre>
+<pre><br/><br/><br/></pre>
 <p></p><br />HW 1 Exam << <a href='HW 1 Exam.html'>Previous</a> <a href='w12_hw.html'>Next</a> >> w12_hw</div>
         
     <!-- footer -->
